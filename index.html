@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/proj4.js"></script>
+        <script src="js/proj4leaflet.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var crs = new L.Proj.CRS('EPSG:3395', '+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs', {
+            resolutions: [2800, 1400, 700, 350, 175, 84, 42, 21, 11.2, 5.6, 2.8, 1.4, 0.7, 0.35, 0.14, 0.07],
+        });
+        var map = L.map('map', {
+            crs: crs,
+            continuousWorld: false,
+            worldCopyJump: false, 
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-10.404077866309251,102.44996220251969],[-1.5893415811266935,119.9483990567572]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_INDEKSRISIKOMULTIBAHAYA_0');
+        map.getPane('pane_INDEKSRISIKOMULTIBAHAYA_0').style.zIndex = 400;
+        var img_INDEKSRISIKOMULTIBAHAYA_0 = 'data/INDEKSRISIKOMULTIBAHAYA_0.png';
+        var img_bounds_INDEKSRISIKOMULTIBAHAYA_0 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSRISIKOMULTIBAHAYA_0 = new L.imageOverlay(img_INDEKSRISIKOMULTIBAHAYA_0,
+                                              img_bounds_INDEKSRISIKOMULTIBAHAYA_0,
+                                              {pane: 'pane_INDEKSRISIKOMULTIBAHAYA_0'});
+        bounds_group.addLayer(layer_INDEKSRISIKOMULTIBAHAYA_0);
+        map.addLayer(layer_INDEKSRISIKOMULTIBAHAYA_0);
+        map.createPane('pane_INDEKSRISIKOTANAHLONGSOR_1');
+        map.getPane('pane_INDEKSRISIKOTANAHLONGSOR_1').style.zIndex = 401;
+        var img_INDEKSRISIKOTANAHLONGSOR_1 = 'data/INDEKSRISIKOTANAHLONGSOR_1.png';
+        var img_bounds_INDEKSRISIKOTANAHLONGSOR_1 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSRISIKOTANAHLONGSOR_1 = new L.imageOverlay(img_INDEKSRISIKOTANAHLONGSOR_1,
+                                              img_bounds_INDEKSRISIKOTANAHLONGSOR_1,
+                                              {pane: 'pane_INDEKSRISIKOTANAHLONGSOR_1'});
+        bounds_group.addLayer(layer_INDEKSRISIKOTANAHLONGSOR_1);
+        map.addLayer(layer_INDEKSRISIKOTANAHLONGSOR_1);
+        map.createPane('pane_INDEKSRISIKOKEKERINGAN_2');
+        map.getPane('pane_INDEKSRISIKOKEKERINGAN_2').style.zIndex = 402;
+        var img_INDEKSRISIKOKEKERINGAN_2 = 'data/INDEKSRISIKOKEKERINGAN_2.png';
+        var img_bounds_INDEKSRISIKOKEKERINGAN_2 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSRISIKOKEKERINGAN_2 = new L.imageOverlay(img_INDEKSRISIKOKEKERINGAN_2,
+                                              img_bounds_INDEKSRISIKOKEKERINGAN_2,
+                                              {pane: 'pane_INDEKSRISIKOKEKERINGAN_2'});
+        bounds_group.addLayer(layer_INDEKSRISIKOKEKERINGAN_2);
+        map.addLayer(layer_INDEKSRISIKOKEKERINGAN_2);
+        map.createPane('pane_INDEKSRISIKOKARHUTLA_3');
+        map.getPane('pane_INDEKSRISIKOKARHUTLA_3').style.zIndex = 403;
+        var img_INDEKSRISIKOKARHUTLA_3 = 'data/INDEKSRISIKOKARHUTLA_3.png';
+        var img_bounds_INDEKSRISIKOKARHUTLA_3 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSRISIKOKARHUTLA_3 = new L.imageOverlay(img_INDEKSRISIKOKARHUTLA_3,
+                                              img_bounds_INDEKSRISIKOKARHUTLA_3,
+                                              {pane: 'pane_INDEKSRISIKOKARHUTLA_3'});
+        bounds_group.addLayer(layer_INDEKSRISIKOKARHUTLA_3);
+        map.addLayer(layer_INDEKSRISIKOKARHUTLA_3);
+        map.createPane('pane_INDEKSRISIKOGEMPABUMI_4');
+        map.getPane('pane_INDEKSRISIKOGEMPABUMI_4').style.zIndex = 404;
+        var img_INDEKSRISIKOGEMPABUMI_4 = 'data/INDEKSRISIKOGEMPABUMI_4.png';
+        var img_bounds_INDEKSRISIKOGEMPABUMI_4 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSRISIKOGEMPABUMI_4 = new L.imageOverlay(img_INDEKSRISIKOGEMPABUMI_4,
+                                              img_bounds_INDEKSRISIKOGEMPABUMI_4,
+                                              {pane: 'pane_INDEKSRISIKOGEMPABUMI_4'});
+        bounds_group.addLayer(layer_INDEKSRISIKOGEMPABUMI_4);
+        map.addLayer(layer_INDEKSRISIKOGEMPABUMI_4);
+        map.createPane('pane_INDEKSRISIKOCUACAEKSTRIM_5');
+        map.getPane('pane_INDEKSRISIKOCUACAEKSTRIM_5').style.zIndex = 405;
+        var img_INDEKSRISIKOCUACAEKSTRIM_5 = 'data/INDEKSRISIKOCUACAEKSTRIM_5.png';
+        var img_bounds_INDEKSRISIKOCUACAEKSTRIM_5 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSRISIKOCUACAEKSTRIM_5 = new L.imageOverlay(img_INDEKSRISIKOCUACAEKSTRIM_5,
+                                              img_bounds_INDEKSRISIKOCUACAEKSTRIM_5,
+                                              {pane: 'pane_INDEKSRISIKOCUACAEKSTRIM_5'});
+        bounds_group.addLayer(layer_INDEKSRISIKOCUACAEKSTRIM_5);
+        map.addLayer(layer_INDEKSRISIKOCUACAEKSTRIM_5);
+        map.createPane('pane_INDEKSRISIKOBANJIRBANDANG_6');
+        map.getPane('pane_INDEKSRISIKOBANJIRBANDANG_6').style.zIndex = 406;
+        var img_INDEKSRISIKOBANJIRBANDANG_6 = 'data/INDEKSRISIKOBANJIRBANDANG_6.png';
+        var img_bounds_INDEKSRISIKOBANJIRBANDANG_6 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSRISIKOBANJIRBANDANG_6 = new L.imageOverlay(img_INDEKSRISIKOBANJIRBANDANG_6,
+                                              img_bounds_INDEKSRISIKOBANJIRBANDANG_6,
+                                              {pane: 'pane_INDEKSRISIKOBANJIRBANDANG_6'});
+        bounds_group.addLayer(layer_INDEKSRISIKOBANJIRBANDANG_6);
+        map.addLayer(layer_INDEKSRISIKOBANJIRBANDANG_6);
+        map.createPane('pane_INDEKSRISIKOBANJIR_7');
+        map.getPane('pane_INDEKSRISIKOBANJIR_7').style.zIndex = 407;
+        var img_INDEKSRISIKOBANJIR_7 = 'data/INDEKSRISIKOBANJIR_7.png';
+        var img_bounds_INDEKSRISIKOBANJIR_7 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSRISIKOBANJIR_7 = new L.imageOverlay(img_INDEKSRISIKOBANJIR_7,
+                                              img_bounds_INDEKSRISIKOBANJIR_7,
+                                              {pane: 'pane_INDEKSRISIKOBANJIR_7'});
+        bounds_group.addLayer(layer_INDEKSRISIKOBANJIR_7);
+        map.addLayer(layer_INDEKSRISIKOBANJIR_7);
+        map.createPane('pane_INDEKSKERENTANANMULTIBAHAYA_8');
+        map.getPane('pane_INDEKSKERENTANANMULTIBAHAYA_8').style.zIndex = 408;
+        var img_INDEKSKERENTANANMULTIBAHAYA_8 = 'data/INDEKSKERENTANANMULTIBAHAYA_8.png';
+        var img_bounds_INDEKSKERENTANANMULTIBAHAYA_8 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSKERENTANANMULTIBAHAYA_8 = new L.imageOverlay(img_INDEKSKERENTANANMULTIBAHAYA_8,
+                                              img_bounds_INDEKSKERENTANANMULTIBAHAYA_8,
+                                              {pane: 'pane_INDEKSKERENTANANMULTIBAHAYA_8'});
+        bounds_group.addLayer(layer_INDEKSKERENTANANMULTIBAHAYA_8);
+        map.addLayer(layer_INDEKSKERENTANANMULTIBAHAYA_8);
+        map.createPane('pane_INDEKSKERENTANANTANAHLONGSOR_9');
+        map.getPane('pane_INDEKSKERENTANANTANAHLONGSOR_9').style.zIndex = 409;
+        var img_INDEKSKERENTANANTANAHLONGSOR_9 = 'data/INDEKSKERENTANANTANAHLONGSOR_9.png';
+        var img_bounds_INDEKSKERENTANANTANAHLONGSOR_9 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSKERENTANANTANAHLONGSOR_9 = new L.imageOverlay(img_INDEKSKERENTANANTANAHLONGSOR_9,
+                                              img_bounds_INDEKSKERENTANANTANAHLONGSOR_9,
+                                              {pane: 'pane_INDEKSKERENTANANTANAHLONGSOR_9'});
+        bounds_group.addLayer(layer_INDEKSKERENTANANTANAHLONGSOR_9);
+        map.addLayer(layer_INDEKSKERENTANANTANAHLONGSOR_9);
+        map.createPane('pane_INDEKSKERENTANANKEKERINGAN_10');
+        map.getPane('pane_INDEKSKERENTANANKEKERINGAN_10').style.zIndex = 410;
+        var img_INDEKSKERENTANANKEKERINGAN_10 = 'data/INDEKSKERENTANANKEKERINGAN_10.png';
+        var img_bounds_INDEKSKERENTANANKEKERINGAN_10 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSKERENTANANKEKERINGAN_10 = new L.imageOverlay(img_INDEKSKERENTANANKEKERINGAN_10,
+                                              img_bounds_INDEKSKERENTANANKEKERINGAN_10,
+                                              {pane: 'pane_INDEKSKERENTANANKEKERINGAN_10'});
+        bounds_group.addLayer(layer_INDEKSKERENTANANKEKERINGAN_10);
+        map.addLayer(layer_INDEKSKERENTANANKEKERINGAN_10);
+        map.createPane('pane_INDEKSKERENTANANKARHUTLA_11');
+        map.getPane('pane_INDEKSKERENTANANKARHUTLA_11').style.zIndex = 411;
+        var img_INDEKSKERENTANANKARHUTLA_11 = 'data/INDEKSKERENTANANKARHUTLA_11.png';
+        var img_bounds_INDEKSKERENTANANKARHUTLA_11 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSKERENTANANKARHUTLA_11 = new L.imageOverlay(img_INDEKSKERENTANANKARHUTLA_11,
+                                              img_bounds_INDEKSKERENTANANKARHUTLA_11,
+                                              {pane: 'pane_INDEKSKERENTANANKARHUTLA_11'});
+        bounds_group.addLayer(layer_INDEKSKERENTANANKARHUTLA_11);
+        map.addLayer(layer_INDEKSKERENTANANKARHUTLA_11);
+        map.createPane('pane_INDEKSKERENTANANGEMPABUMI_12');
+        map.getPane('pane_INDEKSKERENTANANGEMPABUMI_12').style.zIndex = 412;
+        var img_INDEKSKERENTANANGEMPABUMI_12 = 'data/INDEKSKERENTANANGEMPABUMI_12.png';
+        var img_bounds_INDEKSKERENTANANGEMPABUMI_12 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSKERENTANANGEMPABUMI_12 = new L.imageOverlay(img_INDEKSKERENTANANGEMPABUMI_12,
+                                              img_bounds_INDEKSKERENTANANGEMPABUMI_12,
+                                              {pane: 'pane_INDEKSKERENTANANGEMPABUMI_12'});
+        bounds_group.addLayer(layer_INDEKSKERENTANANGEMPABUMI_12);
+        map.addLayer(layer_INDEKSKERENTANANGEMPABUMI_12);
+        map.createPane('pane_INDEKSKERENTANANCUACAEKSTRIM_13');
+        map.getPane('pane_INDEKSKERENTANANCUACAEKSTRIM_13').style.zIndex = 413;
+        var img_INDEKSKERENTANANCUACAEKSTRIM_13 = 'data/INDEKSKERENTANANCUACAEKSTRIM_13.png';
+        var img_bounds_INDEKSKERENTANANCUACAEKSTRIM_13 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSKERENTANANCUACAEKSTRIM_13 = new L.imageOverlay(img_INDEKSKERENTANANCUACAEKSTRIM_13,
+                                              img_bounds_INDEKSKERENTANANCUACAEKSTRIM_13,
+                                              {pane: 'pane_INDEKSKERENTANANCUACAEKSTRIM_13'});
+        bounds_group.addLayer(layer_INDEKSKERENTANANCUACAEKSTRIM_13);
+        map.addLayer(layer_INDEKSKERENTANANCUACAEKSTRIM_13);
+        map.createPane('pane_INDEKSKERENTANANBANJIRBANDANG_14');
+        map.getPane('pane_INDEKSKERENTANANBANJIRBANDANG_14').style.zIndex = 414;
+        var img_INDEKSKERENTANANBANJIRBANDANG_14 = 'data/INDEKSKERENTANANBANJIRBANDANG_14.png';
+        var img_bounds_INDEKSKERENTANANBANJIRBANDANG_14 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSKERENTANANBANJIRBANDANG_14 = new L.imageOverlay(img_INDEKSKERENTANANBANJIRBANDANG_14,
+                                              img_bounds_INDEKSKERENTANANBANJIRBANDANG_14,
+                                              {pane: 'pane_INDEKSKERENTANANBANJIRBANDANG_14'});
+        bounds_group.addLayer(layer_INDEKSKERENTANANBANJIRBANDANG_14);
+        map.addLayer(layer_INDEKSKERENTANANBANJIRBANDANG_14);
+        map.createPane('pane_INDEKSKERENTANANBANJIR_15');
+        map.getPane('pane_INDEKSKERENTANANBANJIR_15').style.zIndex = 415;
+        var img_INDEKSKERENTANANBANJIR_15 = 'data/INDEKSKERENTANANBANJIR_15.png';
+        var img_bounds_INDEKSKERENTANANBANJIR_15 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSKERENTANANBANJIR_15 = new L.imageOverlay(img_INDEKSKERENTANANBANJIR_15,
+                                              img_bounds_INDEKSKERENTANANBANJIR_15,
+                                              {pane: 'pane_INDEKSKERENTANANBANJIR_15'});
+        bounds_group.addLayer(layer_INDEKSKERENTANANBANJIR_15);
+        map.addLayer(layer_INDEKSKERENTANANBANJIR_15);
+        map.createPane('pane_INDEKSBAHAYAMULTIBAHAYA_16');
+        map.getPane('pane_INDEKSBAHAYAMULTIBAHAYA_16').style.zIndex = 416;
+        var img_INDEKSBAHAYAMULTIBAHAYA_16 = 'data/INDEKSBAHAYAMULTIBAHAYA_16.png';
+        var img_bounds_INDEKSBAHAYAMULTIBAHAYA_16 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSBAHAYAMULTIBAHAYA_16 = new L.imageOverlay(img_INDEKSBAHAYAMULTIBAHAYA_16,
+                                              img_bounds_INDEKSBAHAYAMULTIBAHAYA_16,
+                                              {pane: 'pane_INDEKSBAHAYAMULTIBAHAYA_16'});
+        bounds_group.addLayer(layer_INDEKSBAHAYAMULTIBAHAYA_16);
+        map.addLayer(layer_INDEKSBAHAYAMULTIBAHAYA_16);
+        map.createPane('pane_INDEKSBAHAYATANAHLONGSOR_17');
+        map.getPane('pane_INDEKSBAHAYATANAHLONGSOR_17').style.zIndex = 417;
+        var img_INDEKSBAHAYATANAHLONGSOR_17 = 'data/INDEKSBAHAYATANAHLONGSOR_17.png';
+        var img_bounds_INDEKSBAHAYATANAHLONGSOR_17 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSBAHAYATANAHLONGSOR_17 = new L.imageOverlay(img_INDEKSBAHAYATANAHLONGSOR_17,
+                                              img_bounds_INDEKSBAHAYATANAHLONGSOR_17,
+                                              {pane: 'pane_INDEKSBAHAYATANAHLONGSOR_17'});
+        bounds_group.addLayer(layer_INDEKSBAHAYATANAHLONGSOR_17);
+        map.addLayer(layer_INDEKSBAHAYATANAHLONGSOR_17);
+        map.createPane('pane_INDEKSBAHAYAKEKERINGAN_18');
+        map.getPane('pane_INDEKSBAHAYAKEKERINGAN_18').style.zIndex = 418;
+        var img_INDEKSBAHAYAKEKERINGAN_18 = 'data/INDEKSBAHAYAKEKERINGAN_18.png';
+        var img_bounds_INDEKSBAHAYAKEKERINGAN_18 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSBAHAYAKEKERINGAN_18 = new L.imageOverlay(img_INDEKSBAHAYAKEKERINGAN_18,
+                                              img_bounds_INDEKSBAHAYAKEKERINGAN_18,
+                                              {pane: 'pane_INDEKSBAHAYAKEKERINGAN_18'});
+        bounds_group.addLayer(layer_INDEKSBAHAYAKEKERINGAN_18);
+        map.addLayer(layer_INDEKSBAHAYAKEKERINGAN_18);
+        map.createPane('pane_INDEKSBAHAYAKARHUTLA_19');
+        map.getPane('pane_INDEKSBAHAYAKARHUTLA_19').style.zIndex = 419;
+        var img_INDEKSBAHAYAKARHUTLA_19 = 'data/INDEKSBAHAYAKARHUTLA_19.png';
+        var img_bounds_INDEKSBAHAYAKARHUTLA_19 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSBAHAYAKARHUTLA_19 = new L.imageOverlay(img_INDEKSBAHAYAKARHUTLA_19,
+                                              img_bounds_INDEKSBAHAYAKARHUTLA_19,
+                                              {pane: 'pane_INDEKSBAHAYAKARHUTLA_19'});
+        bounds_group.addLayer(layer_INDEKSBAHAYAKARHUTLA_19);
+        map.addLayer(layer_INDEKSBAHAYAKARHUTLA_19);
+        map.createPane('pane_INDEKSBAHAYAGEMPABUMI_20');
+        map.getPane('pane_INDEKSBAHAYAGEMPABUMI_20').style.zIndex = 420;
+        var img_INDEKSBAHAYAGEMPABUMI_20 = 'data/INDEKSBAHAYAGEMPABUMI_20.png';
+        var img_bounds_INDEKSBAHAYAGEMPABUMI_20 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSBAHAYAGEMPABUMI_20 = new L.imageOverlay(img_INDEKSBAHAYAGEMPABUMI_20,
+                                              img_bounds_INDEKSBAHAYAGEMPABUMI_20,
+                                              {pane: 'pane_INDEKSBAHAYAGEMPABUMI_20'});
+        bounds_group.addLayer(layer_INDEKSBAHAYAGEMPABUMI_20);
+        map.addLayer(layer_INDEKSBAHAYAGEMPABUMI_20);
+        map.createPane('pane_INDEKSBAHAYACUACAEKSTRIM_21');
+        map.getPane('pane_INDEKSBAHAYACUACAEKSTRIM_21').style.zIndex = 421;
+        var img_INDEKSBAHAYACUACAEKSTRIM_21 = 'data/INDEKSBAHAYACUACAEKSTRIM_21.png';
+        var img_bounds_INDEKSBAHAYACUACAEKSTRIM_21 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSBAHAYACUACAEKSTRIM_21 = new L.imageOverlay(img_INDEKSBAHAYACUACAEKSTRIM_21,
+                                              img_bounds_INDEKSBAHAYACUACAEKSTRIM_21,
+                                              {pane: 'pane_INDEKSBAHAYACUACAEKSTRIM_21'});
+        bounds_group.addLayer(layer_INDEKSBAHAYACUACAEKSTRIM_21);
+        map.addLayer(layer_INDEKSBAHAYACUACAEKSTRIM_21);
+        map.createPane('pane_INDEKSBAHAYABANJIRBANDANG_22');
+        map.getPane('pane_INDEKSBAHAYABANJIRBANDANG_22').style.zIndex = 422;
+        var img_INDEKSBAHAYABANJIRBANDANG_22 = 'data/INDEKSBAHAYABANJIRBANDANG_22.png';
+        var img_bounds_INDEKSBAHAYABANJIRBANDANG_22 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSBAHAYABANJIRBANDANG_22 = new L.imageOverlay(img_INDEKSBAHAYABANJIRBANDANG_22,
+                                              img_bounds_INDEKSBAHAYABANJIRBANDANG_22,
+                                              {pane: 'pane_INDEKSBAHAYABANJIRBANDANG_22'});
+        bounds_group.addLayer(layer_INDEKSBAHAYABANJIRBANDANG_22);
+        map.addLayer(layer_INDEKSBAHAYABANJIRBANDANG_22);
+        map.createPane('pane_INDEKSBAHAYABANJIR_23');
+        map.getPane('pane_INDEKSBAHAYABANJIR_23').style.zIndex = 423;
+        var img_INDEKSBAHAYABANJIR_23 = 'data/INDEKSBAHAYABANJIR_23.png';
+        var img_bounds_INDEKSBAHAYABANJIR_23 = [[-7.575102499730202,108.16646823045095],[-7.051305901986798,108.72342370660505]];
+        var layer_INDEKSBAHAYABANJIR_23 = new L.imageOverlay(img_INDEKSBAHAYABANJIR_23,
+                                              img_bounds_INDEKSBAHAYABANJIR_23,
+                                              {pane: 'pane_INDEKSBAHAYABANJIR_23'});
+        bounds_group.addLayer(layer_INDEKSBAHAYABANJIR_23);
+        map.addLayer(layer_INDEKSBAHAYABANJIR_23);
+        map.createPane('pane_MapboxSatellite_24');
+        map.getPane('pane_MapboxSatellite_24').style.zIndex = 424;
+        var layer_MapboxSatellite_24 = L.tileLayer('https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.webp?sku=101S0AiAdllT3&access_token=pk.eyJ1Ijoiam9uY2hlbWxhIiwiYSI6IjdXUzRocmsifQ.acEmRifqE4Bh2Xz-IY_4Bw', {
+            pane: 'pane_MapboxSatellite_24',
+            opacity: 1.0,
+            attribution: '<a href="https://www.maxar.com/">Maxar</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_MapboxSatellite_24;
+        map.addLayer(layer_MapboxSatellite_24);
+        map.createPane('pane_OSMStandard_25');
+        map.getPane('pane_OSMStandard_25').style.zIndex = 425;
+        var layer_OSMStandard_25 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_25',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_25;
+        map.addLayer(layer_OSMStandard_25);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{"OSM Standard": layer_OSMStandard_25,"Mapbox Satellite": layer_MapboxSatellite_24,"INDEKS BAHAYA BANJIR": layer_INDEKSBAHAYABANJIR_23,"INDEKS BAHAYA BANJIR BANDANG": layer_INDEKSBAHAYABANJIRBANDANG_22,"INDEKS BAHAYA CUACA EKSTRIM": layer_INDEKSBAHAYACUACAEKSTRIM_21,"INDEKS BAHAYA GEMPABUMI": layer_INDEKSBAHAYAGEMPABUMI_20,"INDEKS BAHAYA KARHUTLA": layer_INDEKSBAHAYAKARHUTLA_19,"INDEKS BAHAYA KEKERINGAN": layer_INDEKSBAHAYAKEKERINGAN_18,"INDEKS BAHAYA TANAH LONGSOR": layer_INDEKSBAHAYATANAHLONGSOR_17,"INDEKS BAHAYA MULTIBAHAYA": layer_INDEKSBAHAYAMULTIBAHAYA_16,"INDEKS KERENTANAN BANJIR": layer_INDEKSKERENTANANBANJIR_15,"INDEKS KERENTANAN BANJIR BANDANG": layer_INDEKSKERENTANANBANJIRBANDANG_14,"INDEKS KERENTANAN CUACA EKSTRIM": layer_INDEKSKERENTANANCUACAEKSTRIM_13,"INDEKS KERENTANAN GEMPABUMI": layer_INDEKSKERENTANANGEMPABUMI_12,"INDEKS KERENTANAN KARHUTLA": layer_INDEKSKERENTANANKARHUTLA_11,"INDEKS KERENTANAN KEKERINGAN": layer_INDEKSKERENTANANKEKERINGAN_10,"INDEKS KERENTANAN TANAH LONGSOR": layer_INDEKSKERENTANANTANAHLONGSOR_9,"INDEKS KERENTANAN MULTIBAHAYA": layer_INDEKSKERENTANANMULTIBAHAYA_8,"INDEKS RISIKO BANJIR": layer_INDEKSRISIKOBANJIR_7,"INDEKS RISIKO BANJIR BANDANG": layer_INDEKSRISIKOBANJIRBANDANG_6,"INDEKS RISIKO CUACA EKSTRIM": layer_INDEKSRISIKOCUACAEKSTRIM_5,"INDEKS RISIKO GEMPABUMI": layer_INDEKSRISIKOGEMPABUMI_4,"INDEKS RISIKO KARHUTLA": layer_INDEKSRISIKOKARHUTLA_3,"INDEKS RISIKO KEKERINGAN": layer_INDEKSRISIKOKEKERINGAN_2,"INDEKS RISIKO TANAH LONGSOR": layer_INDEKSRISIKOTANAHLONGSOR_1,"INDEKS RISIKO MULTIBAHAYA": layer_INDEKSRISIKOMULTIBAHAYA_0,}).addTo(map);
+        setBounds();
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        </script>
+    </body>
+</html>
