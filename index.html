@@ -18,7 +18,10 @@
         <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
 		<link rel="stylesheet" href="css/L.Control.MousePosition.css">
-        <style>
+		<link rel="stylesheet" href="css/leaflet-ruler.css">
+		<link rel="stylesheet" href="css/leaflet.rainviewer.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mwasil/Leaflet.Rainviewer/leaflet.rainviewer.css"/>
+		<style>
         html, body, #map {
             width: 100%;
             height: 100%;
@@ -45,6 +48,9 @@
         <script src="js/leaflet-measure.js"></script>
         <script src="js/leaflet.markercluster.js"></script>
         <script src="js/leaflet-search.js"></script>
+		<script src="js/leaflet-ruler.js"></script>
+		<script src="js/leaflet.rainviewer.js"></script>
+		<script src="https://cdn.jsdelivr.net/gh/mwasil/Leaflet.Rainviewer/leaflet.rainviewer.js"></script>
 		<script src="js/L.Control.MousePosition.js"></script>
         <script src="data/SLSBPS2019_27.js"></script>
         <script src="data/BatasDesaBPS2019_28.js"></script>
@@ -53,7 +59,8 @@
         <script src="data/Sekolah_31.js"></script>
         <script src="data/Puskesmas_32.js"></script>
         <script src="data/Mesjid_33.js"></script>
-        <script>
+		
+		<script>
 	        var highlightLayer;
         function highlightFeature(e) {
             highlightLayer = e.target;
@@ -70,17 +77,59 @@
             }
         }
         var map = L.map('map', {
-            zoomControl:true, maxZoom:23, minZoom:7
+            zoomControl:true, maxZoom:23, minZoom:1
         })
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
         L.control.locate({locateOptions: {maxZoom: 23}}).addTo(map);
+		
+		//coordinate mouse
 		L.control.mousePosition().addTo(map);
+		
+		//map scale
 		L.control.scale({position: 'bottomleft'}).addTo(map)
 		
-	        var measureControl = new L.Control.Measure({
-            position: 'topleft',
+		//map rulers
+		var options = {
+			position: 'topleft',         // Leaflet control position option
+			circleMarker: {               // Leaflet circle marker options for points used in this plugin
+			color: 'red',
+			radius: 2
+		},
+			lineStyle: {                  // Leaflet polyline options for lines used in this plugin
+			color: 'red',
+			dashArray: '1,6'
+		},
+			lengthUnit: {                 // You can use custom length units. Default unit is kilometers.
+			display: 'km',              // This is the display value will be shown on the screen. Example: 'meters'
+			decimal: 3,                 // Distance result will be fixed to this value. 
+			factor: null,               // This value will be used to convert from kilometers. Example: 1000 (from kilometers to meters)  
+			label: 'Distance:'           
+		},
+			angleUnit: {
+			display: '&deg;',           // This is the display value will be shown on the screen. Example: 'Gradian'
+			decimal: 2,                 // Bearing result will be fixed to this value.
+			factor: null,                // This option is required to customize angle unit. Specify solid angle value for angle unit. Example: 400 (for gradian).
+        label: 'Bearing:'
+             }
+        };
+		L.control.ruler(options).addTo(map)
+		
+		//rainfall
+		var rainviewer = L.control.rainviewer({ 
+        position: 'bottomleft',
+        nextButtonText: '>',
+        playStopButtonText: 'Play/Stop',
+        prevButtonText: '<',
+        positionSliderLabelText: "Hour:",
+        opacitySliderLabelText: "Opacity:",
+        animationInterval: 1500,
+        opacity: 0.5
+    }).addTo(map);
+		
+	    var measureControl = new L.Control.Measure({
+			position: 'topleft',
             primaryLengthUnit: 'meters',
             secondaryLengthUnit: 'kilometers',
             primaryAreaUnit: 'sqmeters',
@@ -113,36 +162,36 @@
                     }
                 L.control.watermark({position:'bottomright'}).addTo(map);
 		map.createPane('pane_MapboxSatellite_0');
-        map.getPane('pane_MapboxSatellite_0').style.zIndex = 400;
+        map.getPane('pane_MapboxSatellite_0').style.zIndex = 1;
         var layer_MapboxSatellite_0 = L.tileLayer('https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.webp?sku=101S0AiAdllT3&access_token=pk.eyJ1Ijoiam9uY2hlbWxhIiwiYSI6IjdXUzRocmsifQ.acEmRifqE4Bh2Xz-IY_4Bw', {
             pane: 'pane_MapboxSatellite_0',
             opacity: 1.0,
             attribution: '<a href="https://www.maxar.com/">Maxar</a>',
-            minZoom: 7,
+            minZoom: 1,
             maxZoom: 23,
             minNativeZoom: 0,
             maxNativeZoom: 20
         });
         layer_MapboxSatellite_0;
         map.createPane('pane_OpenTopoMap_1');
-        map.getPane('pane_OpenTopoMap_1').style.zIndex = 401;
+        map.getPane('pane_OpenTopoMap_1').style.zIndex = 2;
         var layer_OpenTopoMap_1 = L.tileLayer('https://a.tile.opentopomap.org/{z}/{x}/{y}.png', {
             pane: 'pane_OpenTopoMap_1',
             opacity: 1.0,
             attribution: '<a href="https://www.openstreetmap.org/copyright">Kartendaten: © OpenStreetMap-Mitwirkende, SRTM | Kartendarstellung: © OpenTopoMap (CC-BY-SA)</a>',
-            minZoom: 7,
+            minZoom: 1,
             maxZoom: 23,
             minNativeZoom: 0,
             maxNativeZoom: 18
         });
         layer_OpenTopoMap_1;
         map.createPane('pane_OSMStandard_2');
-        map.getPane('pane_OSMStandard_2').style.zIndex = 402;
+        map.getPane('pane_OSMStandard_2').style.zIndex = 3;
         var layer_OSMStandard_2 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             pane: 'pane_OSMStandard_2',
             opacity: 1.0,
             attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
-            minZoom: 7,
+            minZoom: 1,
             maxZoom: 23,
             minNativeZoom: 0,
             maxNativeZoom: 19
@@ -439,7 +488,7 @@
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
-                weight: 2.0,
+                weight: 0.6,
                 fillOpacity: 0,
                 interactive: true,
             }
@@ -482,9 +531,9 @@
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
-                weight: 3.0,
+                weight: 1.0,
                 fillOpacity: 0,
-                interactive: false,
+                interactive: true,
             }
         }
         map.createPane('pane_BatasKecamatanBPS2019_29');
@@ -526,7 +575,7 @@
                 dashArray: '',
                 lineCap: 'square',
                 lineJoin: 'bevel',
-                weight: 3.0,
+                weight: 2.0,
                 fillOpacity: 0,
                 interactive: false,
             }
@@ -696,6 +745,7 @@
         map.createPane('pane_Mesjid_33');
         map.getPane('pane_Mesjid_33').style.zIndex = 433;
         map.getPane('pane_Mesjid_33').style['mix-blend-mode'] = 'normal';
+	
         var layer_Mesjid_33 = new L.geoJson(json_Mesjid_33, {
             attribution: '',
             interactive: true,
@@ -718,9 +768,9 @@
         bounds_group.addLayer(layer_Mesjid_33);
         var osmGeocoder = new L.Control.Geocoder({
             collapsed: true,
-            position: 'topleft',
-            text: 'Search',
-            title: 'Testing'
+            position: 'topright',
+            text: 'Search for a place by internet',
+           
         }).addTo(map);
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .className += ' fa fa-search';
@@ -734,14 +784,17 @@
 		L.control.layers(Indeks).addTo(map);
 		L.control.layers(BaseMaps).addTo(map);
         setBounds();
-        map.addControl(new L.Control.Search({
-            layer: cluster_BatasDesaBPS2019_28,
+       
+	   map.addControl(new L.Control.Search({
+			position: 'topleft',
+            layer: layer_BatasDesaBPS2019_28,
             initial: false,
             hideMarkerOnCollapse: true,
             propertyName: 'DESA'}));
-        document.getElementsByClassName('search-button')[0].className +=
-         ' fa fa-binoculars';
-        L.ImageOverlay.include({
+        L.Control.Search.addTo(map);
+		document.getElementsByClassName('search-button')[0].className +=
+		' fa fa-binoculars';
+		L.ImageOverlay.include({
             getBounds: function () {
                 return this._bounds;
             }

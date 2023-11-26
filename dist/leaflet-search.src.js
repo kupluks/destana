@@ -1,3 +1,19 @@
+/* 
+ * Leaflet Control Search v3.0.10 - 2023-08-08 
+ * 
+ * Copyright 2023 Stefano Cudini 
+ * stefano.cudini@gmail.com 
+ * https://opengeo.tech/ 
+ * 
+ * Licensed under the MIT license. 
+ * 
+ * Demo: 
+ * https://opengeo.tech/maps/leaflet-search/ 
+ * 
+ * Source: 
+ * git@github.com:stefanocudini/leaflet-search.git 
+ * 
+ */
 /*
   Name          Data passed        Description
 
@@ -551,7 +567,7 @@
           loc.layer = layer
           retRecords[self._getPath(layer.feature.properties, propName)] = loc
         } else {
-          console.warn(`propertyName '${propName}' not found in marker`);
+          
         }
       } else if (layer instanceof L.Path || layer instanceof L.Polyline || layer instanceof L.Polygon) {
         if (self._getPath(layer.options, propName)) {
@@ -563,7 +579,7 @@
           loc.layer = layer
           retRecords[self._getPath(layer.feature.properties, propName)] = loc
         } else {
-          console.warn(`propertyName '${propName}' not found in shape`);
+          
         }
       } else if (Object.prototype.hasOwnProperty.call(layer, 'feature')) { // GeoJSON
         if (Object.prototype.hasOwnProperty.call(layer.feature.properties, propName)) {
@@ -576,10 +592,10 @@
             loc.layer = layer
             retRecords[layer.feature.properties[propName]] = loc
           } else {
-            console.warn(`Unknown type of Layer`);
+            
           }
         } else {
-          console.warn(`propertyName '${propName}' not found in feature`);
+          
         }
       } else if (layer instanceof L.LayerGroup) {
         layer.eachLayer(function (layer) {
