@@ -6,6 +6,10 @@
         <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="description" content="Indeks Bencana Kabupaten Ciamis" />
+		<meta name="keywords" content=" Bahaya, Kerentanan, Risiko, Ciamis" />
+		<link rel="icon" href="images/xyz.png" type="image/x-icon"/>
+		<link rel="shortcut icon" href="images/xyz.png" type=”image/x-icon"/>
         <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/MarkerCluster.css">
@@ -13,6 +17,7 @@
         <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
+		<link rel="stylesheet" href="css/L.Control.MousePosition.css">
         <style>
         html, body, #map {
             width: 100%;
@@ -27,7 +32,8 @@
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
-        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.js"></script>
+		<script src="js/L.Control.Locate.min.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/leaflet.pattern.js"></script>
         <script src="js/leaflet-hash.js"></script>
@@ -39,6 +45,7 @@
         <script src="js/leaflet-measure.js"></script>
         <script src="js/leaflet.markercluster.js"></script>
         <script src="js/leaflet-search.js"></script>
+		<script src="js/L.Control.MousePosition.js"></script>
         <script src="data/SLSBPS2019_27.js"></script>
         <script src="data/BatasDesaBPS2019_28.js"></script>
         <script src="data/BatasKecamatanBPS2019_29.js"></script>
@@ -47,7 +54,7 @@
         <script src="data/Puskesmas_32.js"></script>
         <script src="data/Mesjid_33.js"></script>
         <script>
-        var highlightLayer;
+	        var highlightLayer;
         function highlightFeature(e) {
             highlightLayer = e.target;
 
@@ -66,17 +73,21 @@
             zoomControl:true, maxZoom:23, minZoom:7
         })
         var hash = new L.Hash(map);
-        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        map.attributionControl.setPrefix('<a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
-        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
-        var measureControl = new L.Control.Measure({
+        L.control.locate({locateOptions: {maxZoom: 23}}).addTo(map);
+		L.control.mousePosition().addTo(map);
+		L.control.scale({position: 'bottomleft'}).addTo(map)
+		
+	        var measureControl = new L.Control.Measure({
             position: 'topleft',
             primaryLengthUnit: 'meters',
             secondaryLengthUnit: 'kilometers',
             primaryAreaUnit: 'sqmeters',
             secondaryAreaUnit: 'hectares'
         });
-        measureControl.addTo(map);
+        
+		measureControl.addTo(map);
         document.getElementsByClassName('leaflet-control-measure-toggle')[0]
         .innerHTML = '';
         document.getElementsByClassName('leaflet-control-measure-toggle')[0]
@@ -702,8 +713,13 @@
         .className += ' fa fa-search';
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .title += 'Search for a place';
-        var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/Mesjid_33.png" /> Mesjid': cluster_Mesjid_33,'<img src="legend/Puskesmas_32.png" /> Puskesmas': cluster_Puskesmas_32,'<img src="legend/Sekolah_31.png" /> Sekolah': cluster_Sekolah_31,'<img src="legend/BatasKabupatenBPS2019_30.png" /> Batas Kabupaten BPS 2019': layer_BatasKabupatenBPS2019_30,'<img src="legend/BatasKecamatanBPS2019_29.png" /> Batas Kecamatan BPS 2019': layer_BatasKecamatanBPS2019_29,'<img src="legend/BatasDesaBPS2019_28.png" /> Batas Desa BPS 2019': layer_BatasDesaBPS2019_28,'<img src="legend/SLSBPS2019_27.png" /> SLS BPS 2019': layer_SLSBPS2019_27,"INDEKS BAHAYA BANJIR": layer_INDEKSBAHAYABANJIR_26,"INDEKS BAHAYA BANJIR BANDANG": layer_INDEKSBAHAYABANJIRBANDANG_25,"INDEKS BAHAYA CUACA EKSTRIM": layer_INDEKSBAHAYACUACAEKSTRIM_24,"INDEKS BAHAYA GEMPABUMI": layer_INDEKSBAHAYAGEMPABUMI_23,"INDEKS BAHAYA KARHUTLA": layer_INDEKSBAHAYAKARHUTLA_22,"INDEKS BAHAYA KEKERINGAN": layer_INDEKSBAHAYAKEKERINGAN_21,"INDEKS BAHAYA TANAH LONGSOR": layer_INDEKSBAHAYATANAHLONGSOR_20,"INDEKS BAHAYA MULTIBAHAYA": layer_INDEKSBAHAYAMULTIBAHAYA_19,"INDEKS KERENTANAN BANJIR": layer_INDEKSKERENTANANBANJIR_18,"INDEKS KERENTANAN BANJIR BANDANG": layer_INDEKSKERENTANANBANJIRBANDANG_17,"INDEKS KERENTANAN CUACA EKSTRIM": layer_INDEKSKERENTANANCUACAEKSTRIM_16,"INDEKS KERENTANAN GEMPABUMI": layer_INDEKSKERENTANANGEMPABUMI_15,"INDEKS KERENTANAN KARHUTLA": layer_INDEKSKERENTANANKARHUTLA_14,"INDEKS KERENTANAN KEKERINGAN": layer_INDEKSKERENTANANKEKERINGAN_13,"INDEKS KERENTANAN TANAH LONGSOR": layer_INDEKSKERENTANANTANAHLONGSOR_12,"INDEKS KERENTANAN MULTIBAHAYA": layer_INDEKSKERENTANANMULTIBAHAYA_11,"INDEKS RISIKO BANJIR": layer_INDEKSRISIKOBANJIR_10,"INDEKS RISIKO BANJIR BANDANG": layer_INDEKSRISIKOBANJIRBANDANG_9,"INDEKS RISIKO CUACA EKSTRIM": layer_INDEKSRISIKOCUACAEKSTRIM_8,"INDEKS RISIKO GEMPABUMI": layer_INDEKSRISIKOGEMPABUMI_7,"INDEKS RISIKO KARHUTLA": layer_INDEKSRISIKOKARHUTLA_6,"INDEKS RISIKO KEKERINGAN": layer_INDEKSRISIKOKEKERINGAN_5,"INDEKS RISIKO TANAH LONGSOR": layer_INDEKSRISIKOTANAHLONGSOR_4,"INDEKS RISIKO MULTIBAHAYA": layer_INDEKSRISIKOMULTIBAHAYA_3,"OSM Standard": layer_OSMStandard_2,"OpenTopoMap": layer_OpenTopoMap_1,"Mapbox Satellite": layer_MapboxSatellite_0,}).addTo(map);
+		var Fasilitas = {'<img src="legend/Mesjid_33.png" /> Mesjid': cluster_Mesjid_33,'<img src="legend/Puskesmas_32.png" /> Puskesmas': cluster_Puskesmas_32,'<img src="legend/Sekolah_31.png" /> Sekolah': cluster_Sekolah_31}
+		var BatasAdm = {'<img src="legend/BatasKabupatenBPS2019_30.png" /> Batas Kabupaten BPS 2019': layer_BatasKabupatenBPS2019_30,'<img src="legend/BatasKecamatanBPS2019_29.png" /> Batas Kecamatan BPS 2019': layer_BatasKecamatanBPS2019_29,'<img src="legend/BatasDesaBPS2019_28.png" /> Batas Desa BPS 2019': layer_BatasDesaBPS2019_28,'<img src="legend/SLSBPS2019_27.png" /> SLS BPS 2019': layer_SLSBPS2019_27}
+		var Indeks = {"INDEKS BAHAYA BANJIR": layer_INDEKSBAHAYABANJIR_26,"INDEKS BAHAYA BANJIR BANDANG": layer_INDEKSBAHAYABANJIRBANDANG_25,"INDEKS BAHAYA CUACA EKSTRIM": layer_INDEKSBAHAYACUACAEKSTRIM_24,"INDEKS BAHAYA GEMPABUMI": layer_INDEKSBAHAYAGEMPABUMI_23,"INDEKS BAHAYA KARHUTLA": layer_INDEKSBAHAYAKARHUTLA_22,"INDEKS BAHAYA KEKERINGAN": layer_INDEKSBAHAYAKEKERINGAN_21,"INDEKS BAHAYA TANAH LONGSOR": layer_INDEKSBAHAYATANAHLONGSOR_20,"INDEKS BAHAYA MULTIBAHAYA": layer_INDEKSBAHAYAMULTIBAHAYA_19,"INDEKS KERENTANAN BANJIR": layer_INDEKSKERENTANANBANJIR_18,"INDEKS KERENTANAN BANJIR BANDANG": layer_INDEKSKERENTANANBANJIRBANDANG_17,"INDEKS KERENTANAN CUACA EKSTRIM": layer_INDEKSKERENTANANCUACAEKSTRIM_16,"INDEKS KERENTANAN GEMPABUMI": layer_INDEKSKERENTANANGEMPABUMI_15,"INDEKS KERENTANAN KARHUTLA": layer_INDEKSKERENTANANKARHUTLA_14,"INDEKS KERENTANAN KEKERINGAN": layer_INDEKSKERENTANANKEKERINGAN_13,"INDEKS KERENTANAN TANAH LONGSOR": layer_INDEKSKERENTANANTANAHLONGSOR_12,"INDEKS KERENTANAN MULTIBAHAYA": layer_INDEKSKERENTANANMULTIBAHAYA_11,"INDEKS RISIKO BANJIR": layer_INDEKSRISIKOBANJIR_10,"INDEKS RISIKO BANJIR BANDANG": layer_INDEKSRISIKOBANJIRBANDANG_9,"INDEKS RISIKO CUACA EKSTRIM": layer_INDEKSRISIKOCUACAEKSTRIM_8,"INDEKS RISIKO GEMPABUMI": layer_INDEKSRISIKOGEMPABUMI_7,"INDEKS RISIKO KARHUTLA": layer_INDEKSRISIKOKARHUTLA_6,"INDEKS RISIKO KEKERINGAN": layer_INDEKSRISIKOKEKERINGAN_5,"INDEKS RISIKO TANAH LONGSOR": layer_INDEKSRISIKOTANAHLONGSOR_4,"INDEKS RISIKO MULTIBAHAYA": layer_INDEKSRISIKOMULTIBAHAYA_3}
+		var BaseMaps = {"OSM Standard": layer_OSMStandard_2,"OpenTopoMap": layer_OpenTopoMap_1,"Mapbox Satellite": layer_MapboxSatellite_0}
+		L.control.layers(Fasilitas,BatasAdm,Indeks).addTo(map);
+		L.control.layers(Indeks).addTo(map);
+		L.control.layers(BaseMaps).addTo(map);
         setBounds();
         map.addControl(new L.Control.Search({
             layer: cluster_BatasDesaBPS2019_28,
